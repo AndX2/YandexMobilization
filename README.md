@@ -2,12 +2,14 @@
 
 #Using lib
 
-Jackson 2.x 
+[Jackson 2.x](http://wiki.fasterxml.com/JacksonLicensing)
 Apache license 
-http://wiki.fasterxml.com/JacksonLicensing
 
-wasabeef/recyclerview-animators
+[wasabeef/recyclerview-animators](https://github.com/wasabeef/recyclerview-animators) 
 Apache license 
-https://github.com/wasabeef/recyclerview-animators
+
+
+
+
 
 
