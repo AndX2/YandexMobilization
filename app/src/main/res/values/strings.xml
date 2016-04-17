@@ -1,0 +1,9 @@
+<resources>
+    <string name="source_link" translatable="false">http://cache-default02f.cdn.yandex.net/download.cdn.yandex.net/mobilization-2016/artists.json</string>
+    <string name="app_name">YandexMobilisation</string>
+    <string name="artists">Artists</string>
+    <string name="biography">Biography</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="source_link" translatable="false">http://cache-default02f.cdn.yandex.net/download.cdn.yandex.net/mobilization-2016/artists.json</string>
+    <string name="app_name">Яндекс мобилизация 2016</string>
+    <string name="artists">Исполнители</string>
+    <string name="biography">Биография</string>
+
+</resources>
