@@ -1,5 +1,8 @@
 # YandexMobilization 2016
 
+### Target
+It implements task for [yandex mobilization 2016] suumer school.
+
 ### Code sample
 
 ``
@@ -25,6 +28,7 @@ Apache license
 
 [Jackson 2.x]: <http://wiki.fasterxml.com/JacksonLicensing>
 [wasabeef/recyclerview-animators]: <https://github.com/wasabeef/recyclerview-animators>
+[yandex mobilization 2016]: <https://academy.yandex.ru/events/mobdev/msk-2016/register>
 
 
 
