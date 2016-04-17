@@ -3,6 +3,11 @@
 ### Target
 It implements task for [yandex mobilization 2016] summer school.
 
+### Overview
+*Main screen list*
+
+![main screen list](http://sk.uploads.im/t/QP4Ak.gif)
+
 ### Code sample
 
 ``
