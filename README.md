@@ -2,7 +2,7 @@
 
 #Using lib
 
-*Jackson 2.x 
+@Jackson 2.x 
 Apache license 
 http://wiki.fasterxml.com/JacksonLicensing
 
