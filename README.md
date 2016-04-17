@@ -1,7 +1,7 @@
 # YandexMobilization 2016
 
 ### Target
-It implements task for [yandex mobilization 2016] suumer school.
+It implements task for [yandex mobilization 2016] summer school.
 
 ### Code sample
 
