@@ -1,5 +1,11 @@
 # YandexMobilization 2016
 
+### Code sample
+
+``
+System.out.println("Hello, World!");
+``
+
 ###Using lib
 
  - [Jackson 2.x]
