@@ -8,6 +8,8 @@ Apache license
  - [wasabeef/recyclerview-animators]
 Apache license 
 
+**Free Software, Hell Yeah!**
+
 ## Version 
 
 0.2
