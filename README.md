@@ -8,6 +8,10 @@ Apache license
  - [wasabeef/recyclerview-animators](https://github.com/wasabeef/recyclerview-animators) 
 Apache license 
 
+## Version 
+
+0.2
+
 
 
 
