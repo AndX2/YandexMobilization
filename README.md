@@ -22,6 +22,8 @@ Apache license
  - [wasabeef/recyclerview-animators]
 Apache license 
 
+- [recruit-lifestyle/WaveSwipeRefreshLayout]
+Apache license 
 
 *Free Software, Hell Yeah!*
 
@@ -35,6 +37,7 @@ Apache license
 [Jackson 2.x]: <http://wiki.fasterxml.com/JacksonLicensing>
 [wasabeef/recyclerview-animators]: <https://github.com/wasabeef/recyclerview-animators>
 [yandex mobilization 2016]: <https://academy.yandex.ru/events/mobdev/msk-2016/register>
+[recruit-lifestyle/WaveSwipeRefreshLayout]: <https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout>
 
 
 
