@@ -1,8 +1,10 @@
 package ru.yandex.android.andrew.yandexmobilisation.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Random;
 
 import ru.yandex.android.andrew.yandexmobilisation.utils.Utils;
@@ -12,7 +14,10 @@ import ru.yandex.android.andrew.yandexmobilisation.utils.Utils;
  * this class presentation object item of array from JSON.
  * for sample JSON follow http://cache-default02f.cdn.yandex.net/download.cdn.yandex.net/mobilization-2016/artists.json
  */
-public class Artist implements Serializable {
+
+//external implementation Parcelable https://github.com/johncarl81/parceler
+
+public class Artist implements Parcelable {
 
     private long id;
     private String name;
@@ -34,15 +39,6 @@ public class Artist implements Serializable {
         this.genres = genres;
     }
 
-    /*
-    public String[] getGenres() {
-        return genres;
-    }
-
-    public void setGenres(String[] genres) {
-        this.genres = genres;
-    }
-    */
 
     public int getAlbumNumber() {
         return albumNumber;
@@ -103,8 +99,6 @@ public class Artist implements Serializable {
     public Artist() {
     }
 
-    ;
-
     //TODO delete this constructor. It need for testing.
     public Artist(int stub) {
         name = "kdsjafkf";
@@ -126,7 +120,8 @@ public class Artist implements Serializable {
                 ", description = " + description + ", cover small = " + cover.getSmall() + ", cover big = " + cover.getBig();
     }
 
-    public class Cover implements Serializable {
+
+    public static class Cover implements Parcelable {
         String small;
         String big;
 
@@ -150,7 +145,73 @@ public class Artist implements Serializable {
         }
 
 
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.small);
+            dest.writeString(this.big);
+        }
+
+        protected Cover(Parcel in) {
+            this.small = in.readString();
+            this.big = in.readString();
+        }
+
+        public static final Creator<Cover> CREATOR = new Creator<Cover>() {
+            @Override
+            public Cover createFromParcel(Parcel source) {
+                return new Cover(source);
+            }
+
+            @Override
+            public Cover[] newArray(int size) {
+                return new Cover[size];
+            }
+        };
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.name);
+        dest.writeStringArray(this.genres);
+        dest.writeInt(this.tracksNumber);
+        dest.writeInt(this.albumNumber);
+        dest.writeString(this.link);
+        dest.writeString(this.description);
+        dest.writeParcelable(this.cover, flags);
+    }
+
+    protected Artist(Parcel in) {
+        this.id = in.readLong();
+        this.name = in.readString();
+        this.genres = in.createStringArray();
+        this.tracksNumber = in.readInt();
+        this.albumNumber = in.readInt();
+        this.link = in.readString();
+        this.description = in.readString();
+        this.cover = in.readParcelable(Cover.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Artist> CREATOR = new Parcelable.Creator<Artist>() {
+        @Override
+        public Artist createFromParcel(Parcel source) {
+            return new Artist(source);
+        }
+
+        @Override
+        public Artist[] newArray(int size) {
+            return new Artist[size];
+        }
+    };
 }

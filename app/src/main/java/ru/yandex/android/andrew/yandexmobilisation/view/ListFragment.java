@@ -1,11 +1,11 @@
 package ru.yandex.android.andrew.yandexmobilisation.view;
 
+import android.app.Fragment;
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Loader;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -48,7 +48,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setRetainInstance(true);
+        //setRetainInstance(true);
         View view = null;
         view = inflater.inflate(R.layout.fragment_list, container, false);
         context = getActivity();
@@ -59,7 +59,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
         oldJson = getStringSharedPref(SHARED_PREFERENCE_JSON_ARTISTS_KEY);
         if (list == null)
             list = (List<Artist>) getListFromJson(oldJson, Artist.class);
-        recyclerAdapter = new RecyclerArtistListAdapter(list);
+        recyclerAdapter = new RecyclerArtistListAdapter(getActivity(), list);
         SlideInRightAnimationAdapter animationAdapter = new SlideInRightAnimationAdapter(recyclerAdapter);
         recyclerView.setAdapter(animationAdapter);
         swipeRefreshLayout = (WaveSwipeRefreshLayout) view.findViewById(R.id.swipe_container);
@@ -132,6 +132,10 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
         if (IS_DEBUG)
             Log.d(LOG_TAG, "getSharedPref value = " + value);
         return value;
+    }
+
+    public void notifyItemListClicked(Artist artist) {
+
     }
 
 

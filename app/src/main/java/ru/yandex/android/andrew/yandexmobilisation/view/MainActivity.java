@@ -1,20 +1,27 @@
 package ru.yandex.android.andrew.yandexmobilisation.view;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+
+import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
 
 import java.util.Locale;
 
 import ru.yandex.android.andrew.yandexmobilisation.R;
+import ru.yandex.android.andrew.yandexmobilisation.pojo.Artist;
 import ru.yandex.android.andrew.yandexmobilisation.utils.Utils;
 import ru.yandex.android.andrew.yandexmobilisation.utils.WordsHelper;
 
+import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.EXTRA_LIST_INTENT_TAG;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.IS_DEBUG;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.LOG_TAG;
 
@@ -29,9 +36,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean isTwoPane;
     public FragmentManager fragmentManager;
     private ListFragment listFragment;
+    private DetailFragment detailFragment;
     private SharedPreferences sharedPreferences;
     private BroadcastReceiver broadcastReceiver;
     private ActionBar actionBar;
+    private BroadcastReceiver clickItemListReceiver;
 
 
     @Override
@@ -63,26 +72,63 @@ public class MainActivity extends AppCompatActivity {
         if (IS_DEBUG)
             Log.d(Utils.LOG_TAG, " twoPane = " + isTwoPane);
 
+        if (listFragment == null)
+            listFragment = new ListFragment();
+        if (detailFragment == null)
+            detailFragment = new DetailFragment();
+        fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.container, listFragment);
+        fragmentTransaction.commit();
+
     }
 
     @Override
     protected void onResume() {
+        //registering BroadCastReceiver
+        clickItemListReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (Utils.IS_DEBUG)
+                    Log.d(Utils.LOG_TAG, "receive broadcast");
+                Artist artist = intent.getParcelableExtra(EXTRA_LIST_INTENT_TAG);
+                detailFragment.setArtist(artist);
+                flipFragment();
+                //detailFragment.fillFieldsDetails(artist);
+            }
+        };
+        registerReceiver(clickItemListReceiver, new IntentFilter(Utils.RECEIVER_TAG_ITEM_LIST_CLICK));
         super.onResume();
 
     }
 
     @Override
     protected void onPause() {
+        unregisterReceiver(clickItemListReceiver);
         super.onPause();
     }
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        FragmentManager fm = getSupportFragmentManager();
-        listFragment = (ListFragment) fm.findFragmentById(R.id.list_fragment);
-        RecyclerView recyclerView = listFragment.recyclerView;
-        recyclerView.smoothScrollToPosition(10);
+        if (getFragmentManager().getBackStackEntryCount() != 0) {
+            flipFragment();
+        } else super.onBackPressed();
+
 
     }
+
+    public void flipFragment() {
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+            fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            FragmentTransactionExtended fragmentTransactionExtended = new FragmentTransactionExtended(this,
+                    fragmentTransaction, listFragment, detailFragment, R.id.container);
+            fragmentTransactionExtended.addTransition(FragmentTransactionExtended.CUBE);
+            fragmentTransactionExtended.commit();
+        } else {
+            getFragmentManager().popBackStack();
+            actionBar.setTitle(R.string.artists);
+        }
+    }
+
 }

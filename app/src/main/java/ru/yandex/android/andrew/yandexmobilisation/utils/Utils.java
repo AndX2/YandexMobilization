@@ -30,6 +30,7 @@ public class Utils {
     public static final String SHARED_PREFERENCE_TAG = "shared_preference";
     public static final String SHARED_PREFERENCE_JSON_ARTISTS_KEY = "json_artists";
     public static final String RECEIVER_TAG_UPDATE_LIST = "BROADCAST RECEIVE UPDATE LIST";
+    public static final String RECEIVER_TAG_ITEM_LIST_CLICK = "BROADCAST_ITEM_LIST_CLICK";
     public static final String EXTRA_LIST_INTENT_TAG = "extra list intent tag";
     public static final int LOADER_ID = 1234567890;
 

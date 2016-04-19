@@ -1,5 +1,7 @@
 package ru.yandex.android.andrew.yandexmobilisation.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,8 +29,11 @@ public class RecyclerArtistListAdapter extends RecyclerView.Adapter<RecyclerArti
         list = _list;
     }
 
+    private Context context;
 
-    public RecyclerArtistListAdapter(List<Artist> _list) {
+
+    public RecyclerArtistListAdapter(Context _context, List<Artist> _list) {
+        context = _context;
         list = _list;
     }
 
@@ -51,6 +56,7 @@ public class RecyclerArtistListAdapter extends RecyclerView.Adapter<RecyclerArti
             public void onClick(View v) {
                 if (Utils.IS_DEBUG)
                     Log.d(Utils.LOG_TAG, "onClick for position " + position);
+                sendNotifyItemClicked(list.get(position));
 
             }
         });
@@ -77,6 +83,18 @@ public class RecyclerArtistListAdapter extends RecyclerView.Adapter<RecyclerArti
             tvNumbers = (TextView) view.findViewById(R.id.tv_numbers);
             customImageView = (CustomImageView) view.findViewById(R.id.image_small);
         }
+    }
+
+    private void sendNotifyItemClicked(Artist artist) {
+        Intent intent = new Intent(Utils.RECEIVER_TAG_ITEM_LIST_CLICK);
+        intent.putExtra(Utils.EXTRA_LIST_INTENT_TAG, artist);
+        if (Utils.IS_DEBUG)
+            Log.d(Utils.LOG_TAG, "context = " + context);
+        context.sendBroadcast(intent);
+        if (Utils.IS_DEBUG)
+            Log.d(Utils.LOG_TAG, "send Broadcast");
 
     }
+
+
 }

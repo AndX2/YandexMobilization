@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 public class CustomRecyclerView extends RecyclerView {
     private Context context;
 
+
     public CustomRecyclerView(Context context) {
         super(context);
         this.context = context;
