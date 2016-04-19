@@ -2,12 +2,10 @@ package ru.yandex.android.andrew.yandexmobilisation.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +15,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
 import ru.yandex.android.andrew.yandexmobilisation.R;
 import ru.yandex.android.andrew.yandexmobilisation.adapter.CustomRecyclerView;
@@ -36,7 +35,7 @@ import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.getListFro
  * Created by Andrew on 03.04.2016.
  */
 public class ListFragment extends Fragment implements LoaderManager.LoaderCallbacks<String>,
-        SwipeRefreshLayout.OnRefreshListener {
+        WaveSwipeRefreshLayout.OnRefreshListener {
 
     public CustomRecyclerView recyclerView;
     private RecyclerArtistListAdapter recyclerAdapter;
@@ -44,7 +43,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
     private Context context;
     private List<Artist> list;
     private Loader<String> loader;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private WaveSwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -63,9 +62,10 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
         recyclerAdapter = new RecyclerArtistListAdapter(list);
         SlideInRightAnimationAdapter animationAdapter = new SlideInRightAnimationAdapter(recyclerAdapter);
         recyclerView.setAdapter(animationAdapter);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        swipeRefreshLayout = (WaveSwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLACK, Color.BLUE, Color.CYAN);
+        swipeRefreshLayout.setWaveColor(getResources().getColor(R.color.colorPrimary));
+        //swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLACK, Color.BLUE, Color.CYAN);
 
         if (IS_DEBUG)
             Log.d(LOG_TAG, "ListFragment is onCreateView");
@@ -101,6 +101,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
                 notifyDataChanged(data);
                 break;
         }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -110,7 +111,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(false);
+
         loadData();
     }
 
