@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.yandex.android.andrew.yandexmobilisation.pojo.Artist;
-import ru.yandex.android.andrew.yandexmobilisation.service.RetainFragment;
 import ru.yandex.android.andrew.yandexmobilisation.utils.Utils;
 
 import static java.lang.System.out;
@@ -25,12 +24,12 @@ import static org.junit.Assert.assertTrue;
  */
 public class JsonTest {
     public static final String URL = "http://cache-default02f.cdn.yandex.net/download.cdn.yandex.net/mobilization-2016/artists.json";
-    static RetainFragment retainFragment;
+
     static String fullJson;
 
     @BeforeClass
     public static void init() {
-        retainFragment = new RetainFragment();
+
         fullJson = Utils.getJsonFromUrl(Utils.URL);
     }
 
