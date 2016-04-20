@@ -45,8 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         WordsHelper.setDefaultLocale(Locale.getDefault());
+        if (listFragment == null)
+            listFragment = new ListFragment();
+        if (detailFragment == null)
+            detailFragment = new DetailFragment();
+
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
         actionBar = getSupportActionBar();
@@ -72,10 +77,6 @@ public class MainActivity extends AppCompatActivity {
         if (IS_DEBUG)
             Log.d(Utils.LOG_TAG, " twoPane = " + isTwoPane);
 
-        if (listFragment == null)
-            listFragment = new ListFragment();
-        if (detailFragment == null)
-            detailFragment = new DetailFragment();
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.container, listFragment);
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Utils.IS_DEBUG)
                     Log.d(Utils.LOG_TAG, "receive broadcast");
                 Artist artist = intent.getParcelableExtra(EXTRA_LIST_INTENT_TAG);
+                actionBar.setTitle(artist.getName());
                 detailFragment.setArtist(artist);
                 flipFragment();
                 //detailFragment.fillFieldsDetails(artist);
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() != 0) {
+            actionBar.setTitle(R.string.artists);
             flipFragment();
         } else super.onBackPressed();
 
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             FragmentTransactionExtended fragmentTransactionExtended = new FragmentTransactionExtended(this,
                     fragmentTransaction, listFragment, detailFragment, R.id.container);
-            fragmentTransactionExtended.addTransition(FragmentTransactionExtended.CUBE);
+            fragmentTransactionExtended.addTransition(FragmentTransactionExtended.GLIDE);
             fragmentTransactionExtended.commit();
         } else {
             getFragmentManager().popBackStack();

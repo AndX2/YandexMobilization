@@ -7,5 +7,5 @@
     <dimen name="sw600padding">10dp</dimen>
     <dimen name="default_padding">7dp</dimen>
     <dimen name="left_padding">20dp</dimen>
-    <dimen name="text_size_item_artist_little">13dp</dimen>
+    <dimen name="text_size_item_artist_little">13sp</dimen>
 </resources>

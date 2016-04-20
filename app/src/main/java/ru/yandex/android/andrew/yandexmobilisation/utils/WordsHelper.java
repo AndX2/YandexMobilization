@@ -19,12 +19,12 @@ public class WordsHelper {
         if (Utils.IS_DEBUG)
             Log.d(Utils.LOG_TAG, defaultLocale.toString());
         if (defaultLocale.toString().equals("ru_RU")) {
-            if (albums == 1) title = albums + " альбом, ";
-            else if (albums > 1 && albums < 5) title = albums + " альбома, ";
-            else if (albums > 4 && albums < 21) title = albums + " альбомов, ";
-            else if ((albums % 10) == 1) title = albums + " альбом, ";
-            else if ((albums % 10) > 1 && (albums % 10) < 5) title = albums + " альбома, ";
-            else title = albums + " альбомов, ";
+            if (albums == 1) title = albums + " альбом ∙ ";
+            else if (albums > 1 && albums < 5) title = albums + " альбома ∙ ";
+            else if (albums > 4 && albums < 21) title = albums + " альбомов ∙ ";
+            else if ((albums % 10) == 1) title = albums + " альбом ∙ ";
+            else if ((albums % 10) > 1 && (albums % 10) < 5) title = albums + " альбома ∙ ";
+            else title = albums + " альбомов ∙ ";
 
             if (songs == 1) title += songs + " песня";
             else if (songs > 1 && songs < 5) title += songs + " песни";
