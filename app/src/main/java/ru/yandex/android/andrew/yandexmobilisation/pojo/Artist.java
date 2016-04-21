@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Random;
-
 import ru.yandex.android.andrew.yandexmobilisation.utils.WordsHelper;
 
 /**
@@ -99,19 +97,6 @@ public class Artist implements Parcelable {
     public Artist() {
     }
 
-    //TODO delete this constructor. It need for testing.
-    public Artist(int stub) {
-        name = "kdsjafkf";
-        Random random = new Random();
-        tracksNumber = random.nextInt();
-        albumNumber = random.nextInt();
-        String[] gnrs = {"dance", "rap", "soul"};
-        setGenres(gnrs);
-        cover = new Cover();
-        cover.setSmall("http://avatars.yandex.net/get-music-content/15ae00fc.p.2915/300x300");
-
-
-    }
 
     @Override
     public String toString() {

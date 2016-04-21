@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -78,15 +80,25 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        showSnackbar(getResources().getString(R.string.try_pull_down));
+
+    }
+
 
     public void notifyDataChanged(String json) {
 
         if (json == null || json.length() < 20) {
             netErrorHandle();
-        } else this.list = (List<Artist>) getListFromJson(json, Artist.class);
-        if (list.size() > 1) {
-            putStringSharedPref(SHARED_PREFERENCE_JSON_ARTISTS_KEY, json);
-        } else jacksonErrorHandle();
+        } else {
+            this.list = (List<Artist>) getListFromJson(json, Artist.class);
+            if (list.size() > 1) {
+                putStringSharedPref(SHARED_PREFERENCE_JSON_ARTISTS_KEY, json);
+            } else jacksonErrorHandle();
+        }
+
 
         recyclerAdapter.setList(list);
         recyclerAdapter.notifyDataSetChanged();
@@ -147,19 +159,34 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     private void netErrorHandle() {
-        if (ALLOW_SEND_ERROR_CODE)
+        if (ALLOW_SEND_ERROR_CODE) {
             YandexMetrica.reportEvent(YANDEX_METRICA_NET_ERROR_TAG,
                     getNetErrorMonitor() + " " + Calendar.getInstance().getTime());
+            showSnackbar(getResources().getString(R.string.net_error_message) +
+                    getResources().getString(R.string.we_know));
+        } else showSnackbar(getResources().getString(R.string.net_error_message) +
+                getResources().getString(R.string.we_know));
         if (IS_DEBUG)
             Log.d(LOG_TAG, "netErrorHandle");
     }
 
     private void jacksonErrorHandle() {
-        if (ALLOW_SEND_ERROR_CODE)
+        if (ALLOW_SEND_ERROR_CODE) {
             YandexMetrica.reportEvent(YANDEX_METRICA_JACKSON_ERROR_TAG,
                     getJacksonErrorMonitor() + getBadJson());
+            showSnackbar(getResources().getString(R.string.parse_error_message) +
+                    getResources().getString(R.string.we_know));
+        } else showSnackbar(getResources().getString(R.string.parse_error_message) +
+                getResources().getString(R.string.we_never_know));
         if (IS_DEBUG)
             Log.d(LOG_TAG, "jacksonErrorHandle");
+    }
+
+    private void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(recyclerView, message, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        snackbar.show();
     }
 
 
