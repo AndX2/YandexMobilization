@@ -1,14 +1,19 @@
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipe_container"
+<com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="ru.yandex.android.andrew.yandexmobilisation.view.ListFragment">
+    android:layout_height="match_parent">
 
-    <ru.yandex.android.andrew.yandexmobilisation.adapter.CustomRecyclerView
-        style="@style/ArtistListStyle"
-        android:id="@+id/listview_arlist"
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null" />
-</android.support.v4.widget.SwipeRefreshLayout>
+        tools:context="ru.yandex.android.andrew.yandexmobilisation.view.ListFragment">
+
+        <ru.yandex.android.andrew.yandexmobilisation.adapter.CustomRecyclerView
+            style="@style/ArtistListStyle"
+            android:id="@+id/listview_arlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null" />
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+</com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout>

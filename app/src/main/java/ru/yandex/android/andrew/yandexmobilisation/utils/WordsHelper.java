@@ -62,18 +62,4 @@ public class WordsHelper {
     }
 }
 
-/*
-else if (albums > 1 && albums < 5) title = albums + " альбома ∙ ";
-        else if (albums > 4 && albums < 21) title = albums + " альбомов ∙ ";
-        else if ((albums % 10) == 1) title = albums + " альбом ∙ ";
-        else if ((albums % 10) > 1 && (albums % 10) < 5) title = albums + " альбома ∙ ";
-        else title = albums + " альбомов ∙ ";
 
-        if (songs == 1) title += songs + " песня";
-        else if (songs > 1 && songs < 5) title += songs + " песни";
-        else if (songs > 4 && songs < 21) title += songs + " песен";
-        else if ((songs % 10) == 1) title += songs + " песня";
-        else if ((songs % 10) > 1 && (songs % 10) < 5) title += songs + " песни";
-        else title += songs + " песен";
-
- */
