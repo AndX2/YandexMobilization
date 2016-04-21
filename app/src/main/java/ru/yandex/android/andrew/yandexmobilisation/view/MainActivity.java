@@ -80,27 +80,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-        if (IS_DEBUG)
-            Log.d(LOG_TAG, "Main onCreate");
-        if (IS_DEBUG)
-            Log.d(LOG_TAG, "locale: " + Locale.getDefault().toString());
-
-        //this code determine state UI model and save it into var isTwoPanel:
-        //false - one pane only list artists
-        //true - two panes list + detail fragment
-        if (findViewById(R.id.artist_detail_container) != null) {
-            //if for presentation UI was been selected layout with modificator -sw600dp
-            //then layout contains view with id "artist_detail_container"
-            isTwoPane = true;
-        } else {
-            isTwoPane = false;
-            getSupportActionBar().setElevation(10f);
-        }
-        if (IS_DEBUG)
-            Log.d(Utils.LOG_TAG, " twoPane = " + isTwoPane);
-
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.container, listFragment);

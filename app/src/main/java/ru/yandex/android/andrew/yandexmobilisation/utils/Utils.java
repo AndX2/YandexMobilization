@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class Utils {
 
-    public static final boolean IS_DEBUG = true;
+    public static final boolean IS_DEBUG = false;
     public static final boolean ALLOW_SEND_ERROR_CODE = true;
     public static final String YANDEX_METRICA_API_KEY = "16e04b59-3a13-4e82-ac9d-088eb47a4e2c";
     public static final String YANDEX_METRICA_NET_ERROR_TAG = "net error tag";
@@ -86,7 +86,6 @@ public class Utils {
             badJson = "";
             if (jacksonErrorMonitor != 0) badJson = json;
         }
-
         return list;
     }
 

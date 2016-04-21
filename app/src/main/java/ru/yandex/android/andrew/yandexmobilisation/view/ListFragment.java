@@ -83,7 +83,8 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        showSnackbar(getResources().getString(R.string.try_pull_down));
+        if (list == null || list.size() < 1)
+            showSnackbar(getResources().getString(R.string.try_pull_down));
 
     }
 
