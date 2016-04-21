@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
 
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private DetailFragment detailFragment;
     private BroadcastReceiver clickItemListReceiver;
     Toolbar toolbar;
+    ImageView logo;
+    TextView title;
 
 
     @Override
@@ -54,19 +58,21 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(R.string.artists);
-        toolbar.setLogo(R.drawable.ic_menu_white_24dp);
-        toolbar.setOnClickListener(new View.OnClickListener() {
+        setTitle("");
+
+        logo = (ImageView) findViewById(R.id.navigation_image_view);
+        title = (TextView) findViewById(R.id.toolbar_title);
+
+        logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (IS_DEBUG)
                     Log.d(LOG_TAG, "Toolbar click view: " + v.getId());
                 if (getFragmentManager().getBackStackEntryCount() != 0) {
                     flipFragment();
-                    setTitle(R.string.artists);
-                    toolbar.setLogo(R.drawable.ic_menu_white_24dp);
+                    title.setText(R.string.artists);
+                    logo.setVisibility(View.GONE);
                 }
-
             }
         });
 
@@ -107,8 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 if (Utils.IS_DEBUG)
                     Log.d(Utils.LOG_TAG, "receive broadcast");
                 Artist artist = intent.getParcelableExtra(EXTRA_LIST_INTENT_TAG);
-                setTitle(artist.getName());
-                toolbar.setLogo(R.drawable.ic_arrow_back_white_24dp);
+                title.setText(artist.getName());
+                logo.setVisibility(View.VISIBLE);
                 detailFragment.setArtist(artist);
                 flipFragment();
             }
@@ -128,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() != 0) {
             flipFragment();
-            setTitle(R.string.artists);
-            toolbar.setLogo(R.drawable.ic_menu_white_24dp);
+            title.setText(R.string.artists);
+            logo.setVisibility(View.GONE);
         } else super.onBackPressed();
 
 
@@ -145,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransactionExtended.commit();
         } else {
             getFragmentManager().popBackStack();
-            setTitle(R.string.artists);
+            title.setText(R.string.artists);
         }
     }
 

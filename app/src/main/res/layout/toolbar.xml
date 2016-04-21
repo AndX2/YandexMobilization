@@ -3,4 +3,20 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:minHeight="?attr/actionBarSize"
-    android:background="?attr/colorPrimary" />
+    android:background="?attr/colorPrimary">
+
+    <ImageView
+        android:id="@+id/navigation_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back_white_24dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/action_bar_text"
+        android:text="@string/artists"
+        android:paddingLeft="@dimen/left_padding" />
+</android.support.v7.widget.Toolbar>
