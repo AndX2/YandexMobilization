@@ -60,6 +60,16 @@ public class WordsHelper {
         return stringBuilder.toString();
 
     }
+
+    public static String genresArrayToString(String[] genres) {
+        String tmp = "";
+        for (String genre : genres) {
+            tmp = tmp + genre + ", ";
+        }
+        if (tmp.length() > 2)
+            tmp = tmp.substring(0, tmp.length() - 2);
+        return tmp;
+    }
 }
 
 

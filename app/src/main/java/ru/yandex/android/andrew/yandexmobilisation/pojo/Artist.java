@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Random;
 
-import ru.yandex.android.andrew.yandexmobilisation.utils.Utils;
+import ru.yandex.android.andrew.yandexmobilisation.utils.WordsHelper;
 
 /**
  * Created by Andrew on 03.04.2016.
@@ -115,7 +115,7 @@ public class Artist implements Parcelable {
 
     @Override
     public String toString() {
-        return "Artist: id = " + id + ", name = " + name + ", genres = " + "[" + Utils.genresArrayToString(genres) + "]" +
+        return "Artist: id = " + id + ", name = " + name + ", genres = " + "[" + WordsHelper.genresArrayToString(genres) + "]" +
                 ", tracks = " + tracksNumber + ", albums = " + albumNumber + ", link = " + link +
                 ", description = " + description + ", cover small = " + cover.getSmall() + ", cover big = " + cover.getBig();
     }

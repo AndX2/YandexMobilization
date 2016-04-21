@@ -57,7 +57,7 @@ public class DetailFragment extends Fragment {
         if (Utils.IS_DEBUG)
             Log.d(Utils.LOG_TAG, "Cover big" + artist.getCover().getBig());
         customImageView.loadImage(artist.getCover().getBig(), R.drawable.loading_image_100, R.drawable.loading_error_100, true);
-        tvGenres.setText(Utils.genresArrayToString(artist.getGenres()));
+        tvGenres.setText(WordsHelper.genresArrayToString(artist.getGenres()));
         tvNumbers.setText(WordsHelper.getAlbumsSongsTitle(artist.getAlbumNumber(),
                 artist.getTracksNumber()));
         tvDescription.setText(artist.getDescription());

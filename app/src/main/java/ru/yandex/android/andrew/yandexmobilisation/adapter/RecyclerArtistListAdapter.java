@@ -46,7 +46,7 @@ public class RecyclerArtistListAdapter extends RecyclerView.Adapter<RecyclerArti
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tvName.setText(list.get(position).getName());
-        holder.tvGenres.setText(Utils.genresArrayToString(list.get(position).getGenres()));
+        holder.tvGenres.setText(WordsHelper.genresArrayToString(list.get(position).getGenres()));
         holder.tvNumbers.setText(WordsHelper.getAlbumsSongsTitle(
                 list.get(position).getAlbumNumber(), list.get(position).getTracksNumber()));
         holder.customImageView.loadImage(list.get(position).getCover().getSmall(), R.drawable.loading_image_100,

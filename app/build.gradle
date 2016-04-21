@@ -40,5 +40,6 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.2.1'
     compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
     compile 'com.desarrollodroide:fragmenttransactionextended:1'
+    compile 'com.yandex.android:mobmetricalib:2.40'
 
 }

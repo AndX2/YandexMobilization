@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yandex.metrica.YandexMetrica;
+
+import java.util.Calendar;
 import java.util.List;
 
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
@@ -23,13 +26,19 @@ import ru.yandex.android.andrew.yandexmobilisation.adapter.RecyclerArtistListAda
 import ru.yandex.android.andrew.yandexmobilisation.pojo.Artist;
 import ru.yandex.android.andrew.yandexmobilisation.service.NetLoader;
 
+import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.ALLOW_SEND_ERROR_CODE;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.IS_DEBUG;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.LOADER_ID;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.LOG_TAG;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.SHARED_PREFERENCE_JSON_ARTISTS_KEY;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.SHARED_PREFERENCE_TAG;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.URL;
+import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.YANDEX_METRICA_JACKSON_ERROR_TAG;
+import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.YANDEX_METRICA_NET_ERROR_TAG;
+import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.getBadJson;
+import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.getJacksonErrorMonitor;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.getListFromJson;
+import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.getNetErrorMonitor;
 
 /**
  * Created by Andrew on 03.04.2016.
@@ -71,8 +80,14 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 
 
     public void notifyDataChanged(String json) {
-        this.list = (List<Artist>) getListFromJson(json, Artist.class);
-        if (list.size() > 1) putStringSharedPref(SHARED_PREFERENCE_JSON_ARTISTS_KEY, json);
+
+        if (json == null || json.length() < 20) {
+            netErrorHandle();
+        } else this.list = (List<Artist>) getListFromJson(json, Artist.class);
+        if (list.size() > 1) {
+            putStringSharedPref(SHARED_PREFERENCE_JSON_ARTISTS_KEY, json);
+        } else jacksonErrorHandle();
+
         recyclerAdapter.setList(list);
         recyclerAdapter.notifyDataSetChanged();
     }
@@ -131,9 +146,23 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
         return value;
     }
 
-    public void notifyItemListClicked(Artist artist) {
-
+    private void netErrorHandle() {
+        if (ALLOW_SEND_ERROR_CODE)
+            YandexMetrica.reportEvent(YANDEX_METRICA_NET_ERROR_TAG,
+                    getNetErrorMonitor() + " " + Calendar.getInstance().getTime());
+        if (IS_DEBUG)
+            Log.d(LOG_TAG, "netErrorHandle");
     }
+
+    private void jacksonErrorHandle() {
+        if (ALLOW_SEND_ERROR_CODE)
+            YandexMetrica.reportEvent(YANDEX_METRICA_JACKSON_ERROR_TAG,
+                    getJacksonErrorMonitor() + getBadJson());
+        if (IS_DEBUG)
+            Log.d(LOG_TAG, "jacksonErrorHandle");
+    }
+
+
 
 
 }

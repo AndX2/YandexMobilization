@@ -8,4 +8,5 @@
     <dimen name="default_padding">7dp</dimen>
     <dimen name="left_padding">20dp</dimen>
     <dimen name="text_size_item_artist_little">13sp</dimen>
+    <dimen name="toolbar_text_size">20sp</dimen>
 </resources>
