@@ -65,10 +65,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
         swipeRefreshLayout = (WaveSwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setWaveColor(getResources().getColor(R.color.colorPrimary));
-        //swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLACK, Color.BLUE, Color.CYAN);
 
-        if (IS_DEBUG)
-            Log.d(LOG_TAG, "ListFragment is onCreateView");
         return view;
     }
 
