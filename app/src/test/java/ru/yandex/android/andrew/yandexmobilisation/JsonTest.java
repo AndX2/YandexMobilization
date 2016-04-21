@@ -29,8 +29,14 @@ public class JsonTest {
 
     @BeforeClass
     public static void init() {
-
         fullJson = Utils.getJsonFromUrl(Utils.URL);
+    }
+
+
+    @Test
+    public void getFullCycle() {
+        String json = Utils.getJsonFromUrl(Utils.URL);
+        assertTrue(json != null);
     }
 
 

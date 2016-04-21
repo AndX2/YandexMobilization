@@ -6,11 +6,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
 
@@ -26,21 +26,18 @@ import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.IS_DEBUG;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.LOG_TAG;
 
 /**
- * Launched and Main activity of project.
+ * Launch and Main activity of project.
  * This activity contains listView of artists in min presentation
  */
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String DETAILFRAGMENT_TAG = "DFTAG";
     private boolean isTwoPane;
     public FragmentManager fragmentManager;
     private ListFragment listFragment;
     private DetailFragment detailFragment;
-    private SharedPreferences sharedPreferences;
-    private BroadcastReceiver broadcastReceiver;
-    private ActionBar actionBar;
     private BroadcastReceiver clickItemListReceiver;
+    Toolbar toolbar;
 
 
     @Override
@@ -54,8 +51,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.artists);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.artists);
+        toolbar.setLogo(R.drawable.ic_menu_white_24dp);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (IS_DEBUG)
+                    Log.d(LOG_TAG, "Toolbar click view: " + v.getId());
+                if (getFragmentManager().getBackStackEntryCount() != 0) {
+                    flipFragment();
+                    setTitle(R.string.artists);
+                    toolbar.setLogo(R.drawable.ic_menu_white_24dp);
+                }
+
+            }
+        });
+
 
 
         if (IS_DEBUG)
@@ -93,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
                 if (Utils.IS_DEBUG)
                     Log.d(Utils.LOG_TAG, "receive broadcast");
                 Artist artist = intent.getParcelableExtra(EXTRA_LIST_INTENT_TAG);
-                actionBar.setTitle(artist.getName());
+                setTitle(artist.getName());
+                toolbar.setLogo(R.drawable.ic_arrow_back_white_24dp);
                 detailFragment.setArtist(artist);
                 flipFragment();
-                //detailFragment.fillFieldsDetails(artist);
             }
         };
         registerReceiver(clickItemListReceiver, new IntentFilter(Utils.RECEIVER_TAG_ITEM_LIST_CLICK));
@@ -113,8 +127,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() != 0) {
-            actionBar.setTitle(R.string.artists);
             flipFragment();
+            setTitle(R.string.artists);
+            toolbar.setLogo(R.drawable.ic_menu_white_24dp);
         } else super.onBackPressed();
 
 
@@ -130,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransactionExtended.commit();
         } else {
             getFragmentManager().popBackStack();
-            actionBar.setTitle(R.string.artists);
+            setTitle(R.string.artists);
         }
     }
 

@@ -1,7 +1,5 @@
 package ru.yandex.android.andrew.yandexmobilisation.utils;
 
-import android.util.Log;
-
 import java.util.Locale;
 
 /**
@@ -16,31 +14,66 @@ public class WordsHelper {
 
     public static String getAlbumsSongsTitle(int albums, int songs) {
         String title = "";
-        if (Utils.IS_DEBUG)
-            Log.d(Utils.LOG_TAG, defaultLocale.toString());
-        if (defaultLocale.toString().equals("ru_RU")) {
-            if (albums == 1) title = albums + " альбом ∙ ";
-            else if (albums > 1 && albums < 5) title = albums + " альбома ∙ ";
-            else if (albums > 4 && albums < 21) title = albums + " альбомов ∙ ";
-            else if ((albums % 10) == 1) title = albums + " альбом ∙ ";
-            else if ((albums % 10) > 1 && (albums % 10) < 5) title = albums + " альбома ∙ ";
-            else title = albums + " альбомов ∙ ";
 
-            if (songs == 1) title += songs + " песня";
-            else if (songs > 1 && songs < 5) title += songs + " песни";
-            else if (songs > 4 && songs < 21) title += songs + " песен";
-            else if ((songs % 10) == 1) title += songs + " песня";
-            else if ((songs % 10) > 1 && (songs % 10) < 5) title += songs + " песни";
-            else title += songs + " песен";
-        }
-        if (!defaultLocale.toString().equals("ru_RU")) {
-            if (albums == 1) title = albums + " album, ";
-            else title = albums + " albums, ";
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(albums);
 
-            if (songs == 1) title += songs + " song";
-            else title += songs + " songs";
-        }
+        if (albums == 1) stringBuilder.append(" album ∙ ");
+        else stringBuilder.append(" albums ∙ ");
+
+        stringBuilder.append(songs);
+
+        if (songs == 1) stringBuilder.append(" song");
+        else stringBuilder.append(" songs");
+
+        title = stringBuilder.toString();
+
+        if (defaultLocale.toString().equals("ru_RU")) title = getIfRuLocale(albums, songs);
 
         return title;
     }
+
+    private static String getIfRuLocale(int albums, int songs) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(albums);
+        if (albums == 1) stringBuilder
+                .append(" альбом ∙ ");
+        else if (albums > 1 && albums < 5) stringBuilder
+                .append(" альбома ∙ ");
+        else if (albums > 4 && albums < 21) stringBuilder
+                .append(" альбомов ∙ ");
+        else if ((albums % 10) == 1) stringBuilder
+                .append(" альбом ∙ ");
+        else if ((albums % 10) > 1 && (albums % 10) < 5) stringBuilder
+                .append(" альбома ∙ ");
+        else stringBuilder.append(" альбомов ∙ ");
+
+        stringBuilder.append(songs);
+
+        if (songs == 1) stringBuilder.append(" песня");
+        else if (songs > 1 && songs < 5) stringBuilder.append(" песни");
+        else if (songs > 4 && songs < 21) stringBuilder.append(" песен");
+        else if ((songs % 10) == 1) stringBuilder.append(" песня");
+        else if ((songs % 10) > 1 && (songs % 10) < 5) stringBuilder.append(" песни");
+        else stringBuilder.append(" песен");
+
+        return stringBuilder.toString();
+
+    }
 }
+
+/*
+else if (albums > 1 && albums < 5) title = albums + " альбома ∙ ";
+        else if (albums > 4 && albums < 21) title = albums + " альбомов ∙ ";
+        else if ((albums % 10) == 1) title = albums + " альбом ∙ ";
+        else if ((albums % 10) > 1 && (albums % 10) < 5) title = albums + " альбома ∙ ";
+        else title = albums + " альбомов ∙ ";
+
+        if (songs == 1) title += songs + " песня";
+        else if (songs > 1 && songs < 5) title += songs + " песни";
+        else if (songs > 4 && songs < 21) title += songs + " песен";
+        else if ((songs % 10) == 1) title += songs + " песня";
+        else if ((songs % 10) > 1 && (songs % 10) < 5) title += songs + " песни";
+        else title += songs + " песен";
+
+ */

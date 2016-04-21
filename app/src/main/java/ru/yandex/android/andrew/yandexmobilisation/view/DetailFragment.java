@@ -37,7 +37,7 @@ public class DetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setRetainInstance(true);
+        //setRetainInstance(true);
         View view = null;
         view = inflater.inflate(R.layout.fragment_detail, container, false);
         customImageView = (CustomImageView) view.findViewById(R.id.image_big);
@@ -61,7 +61,7 @@ public class DetailFragment extends Fragment {
         tvNumbers.setText(WordsHelper.getAlbumsSongsTitle(artist.getAlbumNumber(),
                 artist.getTracksNumber()));
         tvDescription.setText(artist.getDescription());
-        getActivity().setTitle(artist.getName());
+        //getActivity().setTitle(artist.getName());
     }
 
 
