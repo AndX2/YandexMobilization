@@ -3,7 +3,12 @@ package ru.yandex.android.andrew.yandexmobilisation.utils;
 import java.util.Locale;
 
 /**
- * Created by Andrew on 14.04.2016.
+ * Helper static class for creating text "## albums, ## songs"
+ * on english (default) and
+ * any another lang (JUST ADD METHOD FOR IT)
+ * RU lang sample getIfRuLocale method
+ * It not contains dependencies androidSDK for work and testing separately from the application
+ * on desktop or another environment
  */
 public class WordsHelper {
     private static Locale defaultLocale = Locale.ENGLISH;

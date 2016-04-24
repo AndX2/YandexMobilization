@@ -10,7 +10,7 @@ import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.LOG_TAG;
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.getJsonFromUrl;
 
 /**
- * Created by Andrew on 11.04.2016.
+ * Simple custom loader for getting json (String) use url
  */
 public class NetLoader extends AsyncTaskLoader<String> {
     String url;

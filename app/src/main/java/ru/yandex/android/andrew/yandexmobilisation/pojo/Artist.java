@@ -8,12 +8,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.yandex.android.andrew.yandexmobilisation.utils.WordsHelper;
 
 /**
- * Created by Andrew on 03.04.2016.
- * this class presentation object item of array from JSON.
+ * This class POJO object item of array from JSON.
  * for sample JSON follow http://cache-default02f.cdn.yandex.net/download.cdn.yandex.net/mobilization-2016/artists.json
+ * impl Parcelable for sending into Bundle, Intent, etc.
  */
 
-//external implementation Parcelable https://github.com/johncarl81/parceler
 
 public class Artist implements Parcelable {
 

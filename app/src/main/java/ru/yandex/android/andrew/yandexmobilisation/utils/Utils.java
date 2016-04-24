@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Andrew on 03.04.2016.
+ * Helper class contains consts and static net work methods.
+ * It not contains dependencies androidSDK for work and testing separately from the application
+ * on desktop or another environment
  */
 public class Utils {
 

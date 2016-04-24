@@ -4,5 +4,10 @@
     <string name="app_name">Яндекс мобилизация 2016</string>
     <string name="artists">Исполнители</string>
     <string name="biography">Биография</string>
+    <string name="net_error_message">Соединение с сервером неудачно. Попробуйте обновить позже.  </string>
+    <string name="parse_error_message">Что-то странное приехало с сервера. Попробуйте обновить еще раз. </string>
+    <string name="we_know">Мы уже знаем об этом :)</string>
+    <string name="we_never_know">Мы никогда об этом не узнаем :((</string>
+    <string name="try_pull_down">Ничего здесь еще нет! Потяните вниз что-бы обновить данные :)</string>
 
 </resources>

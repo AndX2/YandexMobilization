@@ -19,7 +19,7 @@ import ru.yandex.android.andrew.yandexmobilisation.utils.Utils;
 import ru.yandex.android.andrew.yandexmobilisation.utils.WordsHelper;
 
 /**
- * Created by Andrew on 03.04.2016.
+ * This class RecyclerAdapter for listFragment. Inflates to items item_artist_list.xml markdown.
  */
 public class RecyclerArtistListAdapter extends RecyclerView.Adapter<RecyclerArtistListAdapter.ViewHolder> {
 
@@ -86,6 +86,8 @@ public class RecyclerArtistListAdapter extends RecyclerView.Adapter<RecyclerArti
     }
 
     private void sendNotifyItemClicked(Artist artist) {
+        //Notify MainActivity (if active) or another receiver and send into Intent.Extra
+        //selected item relevant Artist POJO.
         Intent intent = new Intent(Utils.RECEIVER_TAG_ITEM_LIST_CLICK);
         intent.putExtra(Utils.EXTRA_LIST_INTENT_TAG, artist);
         if (Utils.IS_DEBUG)

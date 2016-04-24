@@ -24,7 +24,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * Created by Andrew on 11.04.2016.
+ * This class - lightweight VELOSIPED. It extend ImageView. Easy replace ImageView if need show
+ * image not from Res, but use URL path. Cashing early downloaded image on SD, limit request pool, show
+ * image "downloading", show progress download status.
+ * ------------
+ * I now about Picasso. But it is lightweight.
  */
 public class CustomImageView extends ImageView {
     private static final int CONNECT_TIMEOUT = 5000;

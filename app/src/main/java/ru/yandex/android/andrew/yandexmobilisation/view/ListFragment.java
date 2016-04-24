@@ -43,7 +43,7 @@ import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.getListFro
 import static ru.yandex.android.andrew.yandexmobilisation.utils.Utils.getNetErrorMonitor;
 
 /**
- * Created by Andrew on 03.04.2016.
+ * This fragment for view list of artists use RecyclerView and LinearLayoutManager
  */
 public class ListFragment extends Fragment implements LoaderManager.LoaderCallbacks<String>,
         WaveSwipeRefreshLayout.OnRefreshListener {
@@ -59,23 +59,28 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //setRetainInstance(true);
         View view = null;
         view = inflater.inflate(R.layout.fragment_list, container, false);
         context = getActivity();
         recyclerView = (CustomRecyclerView) view.findViewById(R.id.listview_arlist);
         recyclerLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(recyclerLayoutManager);
+        //Getting (if exist) early downloaded JSON stored to SharedPreference
         String oldJson;
         oldJson = getStringSharedPref(SHARED_PREFERENCE_JSON_ARTISTS_KEY);
         if (list == null)
             list = (List<Artist>) getListFromJson(oldJson, Artist.class);
+        //This Custom RecyclerAdapter
+        //It mapped SlideInRightAnimationAdapter - third party lib for animation creating new items in list
+        //https://github.com/wasabeef/recyclerview-animators
         recyclerAdapter = new RecyclerArtistListAdapter(getActivity(), list);
         SlideInRightAnimationAdapter animationAdapter = new SlideInRightAnimationAdapter(recyclerAdapter);
         recyclerView.setAdapter(animationAdapter);
+        //Set third party lib for cool animation "pull to refresh"
+        //https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout
         swipeRefreshLayout = (WaveSwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setWaveColor(getResources().getColor(R.color.colorPrimary));
+        swipeRefreshLayout.setWaveColor(getResources().getColor(R.color.colorAccent));
 
         return view;
     }
@@ -83,6 +88,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //Called Snackbar - hint to user pull empty list for get data.
         if (list == null || list.size() < 1)
             showSnackbar(getResources().getString(R.string.try_pull_down));
 
@@ -90,7 +96,8 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 
 
     public void notifyDataChanged(String json) {
-
+        //Check json and parsed from this list Artists and call methods Handling errors, push
+        //JSON to SharedPreference (storage for next launch app), and refresh view with new data
         if (json == null || json.length() < 20) {
             netErrorHandle();
         } else {
@@ -99,13 +106,12 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
                 putStringSharedPref(SHARED_PREFERENCE_JSON_ARTISTS_KEY, json);
             } else jacksonErrorHandle();
         }
-
-
         recyclerAdapter.setList(list);
         recyclerAdapter.notifyDataSetChanged();
     }
 
     private void loadData() {
+        //Custom method-facade (all needed action for get new data)
         getLoaderManager().initLoader(LOADER_ID, null, this);
         loader.forceLoad();
 
@@ -113,6 +119,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<String> onCreateLoader(int id, Bundle args) {
+        //Creating custom http get loader for getting json.
         loader = null;
         if (id == LOADER_ID)
             loader = new NetLoader(getActivity(), URL);
@@ -121,11 +128,13 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public void onLoadFinished(Loader<String> loader, String data) {
+        //Callback method loader's after download complete
         switch (loader.getId()) {
             case LOADER_ID:
                 notifyDataChanged(data);
                 break;
         }
+        //stop "pull to refresh" animation
         swipeRefreshLayout.setRefreshing(false);
     }
 
@@ -136,11 +145,12 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public void onRefresh() {
-
+        //Method action "swipeRefreshLayout"
         loadData();
     }
 
     private void putStringSharedPref(String key, String value) {
+        //Helper method Put Any String With Any Key to SharedPreference
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFERENCE_TAG, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -149,6 +159,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     private String getStringSharedPref(String key) {
+        //Helper method Get String With Key to SharedPreference
         String value = "";
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(SHARED_PREFERENCE_TAG, Context.MODE_PRIVATE);
@@ -160,6 +171,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     private void netErrorHandle() {
+        //Net errors handle method
         if (ALLOW_SEND_ERROR_CODE) {
             YandexMetrica.reportEvent(YANDEX_METRICA_NET_ERROR_TAG,
                     getNetErrorMonitor() + " " + Calendar.getInstance().getTime());
@@ -172,6 +184,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     private void jacksonErrorHandle() {
+        //Json error handle method
         if (ALLOW_SEND_ERROR_CODE) {
             YandexMetrica.reportEvent(YANDEX_METRICA_JACKSON_ERROR_TAG,
                     getJacksonErrorMonitor() + getBadJson());
@@ -184,6 +197,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     private void showSnackbar(String message) {
+        //Helper methor call Snackbar
         Snackbar snackbar = Snackbar.make(recyclerView, message, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(getResources().getColor(R.color.colorAccent));

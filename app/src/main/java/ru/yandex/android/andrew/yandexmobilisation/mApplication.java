@@ -15,6 +15,7 @@ public class mApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //Init and activation YandexMetrica
         YandexMetrica.activate(getApplicationContext(), Utils.YANDEX_METRICA_API_KEY);
         YandexMetrica.enableActivityAutoTracking(this);
         if (Utils.IS_DEBUG)

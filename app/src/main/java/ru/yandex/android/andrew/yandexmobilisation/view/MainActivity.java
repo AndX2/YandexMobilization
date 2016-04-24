@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -48,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Init helper for construction words "## albums, ## tracks"
+        //It need do before onCreate - before creating View for Activity
         WordsHelper.setDefaultLocale(Locale.getDefault());
         if (listFragment == null)
             listFragment = new ListFragment();
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
+        //This is layout for fragments (list or detail)
         container = (View) findViewById(R.id.container);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         logo = (ImageView) findViewById(R.id.navigation_image_view);
         title = (TextView) findViewById(R.id.toolbar_title);
-
+        //Handler "back" onClick returns from detail to list fragment
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //first filling container after creating activity - listFragment
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.container, listFragment);
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        //registering BroadCastReceiver
+        //registering BroadCastReceiver for receive Artist POJO from item ListFragment and push it to detailFragment
         clickItemListReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -109,12 +110,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        //Unregister Receiver. onStop method call are not guaranteed...
         unregisterReceiver(clickItemListReceiver);
         super.onPause();
     }
 
     @Override
     public void onBackPressed() {
+        //If current view - detailFragment: first press Back returns to listFragment, else first
+        //press Back close Activity
         if (getFragmentManager().getBackStackEntryCount() != 0) {
             flipFragment();
             title.setText(R.string.artists);
@@ -125,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void flipFragment() {
+        //This method ask state fragmentManager and replace listFragment and detailFragment use
+        //third party lib FragmentTransactionExtended animation
+        //https://github.com/DesarrolloAntonio/FragmentTransactionExtended
         if (getFragmentManager().getBackStackEntryCount() == 0) {
             fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -136,10 +143,6 @@ public class MainActivity extends AppCompatActivity {
             getFragmentManager().popBackStack();
             title.setText(R.string.artists);
         }
-    }
-
-    public void showSnackbar(String message) {
-        Snackbar.make(container, message, Snackbar.LENGTH_LONG).show();
     }
 
 }

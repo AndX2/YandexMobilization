@@ -16,7 +16,11 @@ import ru.yandex.android.andrew.yandexmobilisation.utils.Utils;
 import ru.yandex.android.andrew.yandexmobilisation.utils.WordsHelper;
 
 /**
- * Created by Andrew on 11.04.2016.
+ * This fragment not contains nothing action. It just shows Artist POJO fields.
+ * For use need:
+ * 1. setArtist
+ * 2. Self-make (callback onActivityCreated) - filling all views
+ * 3. Profit
  */
 public class DetailFragment extends Fragment {
 
@@ -37,7 +41,6 @@ public class DetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //setRetainInstance(true);
         View view = null;
         view = inflater.inflate(R.layout.fragment_detail, container, false);
         customImageView = (CustomImageView) view.findViewById(R.id.image_big);
@@ -61,7 +64,6 @@ public class DetailFragment extends Fragment {
         tvNumbers.setText(WordsHelper.getAlbumsSongsTitle(artist.getAlbumNumber(),
                 artist.getTracksNumber()));
         tvDescription.setText(artist.getDescription());
-        //getActivity().setTitle(artist.getName());
     }
 
 
