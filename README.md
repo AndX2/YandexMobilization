@@ -6,7 +6,9 @@ It implements task for [yandex mobilization 2016] summer school.
 ### Overview
 *Main screen list*
 
-![main screen list](http://sk.uploads.im/t/QP4Ak.gif)
+![refresh list](http://sk.uploads.im/t/749fY.gif)
+![scroll list](http://sm.uploads.im/t/fVQNX.gif)
+![detail](http://sj.uploads.im/t/8EI6Q.gif[)
 
 ### Code sample
 
